@@ -52,7 +52,7 @@ const Home: NextPage<Props> = ({ trends }: Props) => {
             gap: 16,
           }}
         >
-          {trends.map((trend) => (
+          {trends?.map((trend) => (
             <TrendCard
               key={`trend-card-${slugify(trend.title.query)}`}
               trend={trend}
