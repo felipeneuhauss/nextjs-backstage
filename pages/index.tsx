@@ -1,59 +1,68 @@
 /** @jsxRuntime automatic */
 /** @jsxImportSource theme-ui */
-import type { NextPage } from 'next';
-import Head from 'next/head';
-import Image from 'next/image';
-import googleTrends from 'google-trends-api';
-import styles from '../../styles/Home.module.css';
 
-export async function getServerSideProps() {
+import type { NextPage } from 'next';
+import googleTrends from 'google-trends-api';
+import { Flex } from 'theme-ui';
+import axios from 'axios';
+import slugify from 'slugify';
+
+import TrendCard, { TrendingSearch } from 'components/TrendCard';
+import { useEffect } from 'react';
+import { useMainTrends } from '../contexts/MainTrendsProvider';
+import { Quotation } from '../shared/types/Quotation';
+
+export async function getStaticProps() {
   const trends = await googleTrends.dailyTrends({
     trendDate: new Date(Date.now() - (24 * 60 * 60 * 1000)),
     geo: 'BR',
   });
 
-  console.log('trends', trends);
+  const trendList = JSON.parse(trends).default?.trendingSearchesDays[0]?.trendingSearches;
+
   return {
     props: {
-      trends,
+      trends: trendList || [],
     }, // will be passed to the page component as props
+    revalidate: 15 * 60,
   };
 }
 
 type Props = {
-  trends: any
+  trends: TrendingSearch[]
 }
 
 const Home: NextPage<Props> = ({ trends }: Props) => {
-  console.log('trends', trends);
+  const { setMainTrends } = useMainTrends();
+  useEffect(() => {
+    setMainTrends(trends?.map(
+      (trend: { title: { query: any; }; }) => trend.title.query,
+    ) || []);
+  }, []);
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Pra hoje temos</title>
-        <meta name="description" content="prahojetemos.com.br - Site com as notícias mais pesquisadas do Brasil nas últimas 24 horas." />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main className={styles.main}>
-        {/* <Flex sx={{ flexDirection: 'column', gap: '20px' }}> */}
-        {/*  {!!trends?.map((trend, key) => <TrendCard key={key} trend={trend} />)} */}
-        {/* </Flex> */}
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+    <>
+      <Flex
+        as="main"
+        sx={{
+          flexDirection: 'column', width: 1024, margin: '20px auto',
+        }}
+      >
+        <Flex
+          p={0}
+          sx={{
+            flexDirection: 'column',
+            gap: 16,
+          }}
         >
-          Powered by
-          {' '}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer>
-    </div>
+          {trends.map((trend) => (
+            <TrendCard
+              key={`trend-card-${slugify(trend.title.query)}`}
+              trend={trend}
+            />
+          ))}
+        </Flex>
+      </Flex>
+    </>
   );
 };
 
