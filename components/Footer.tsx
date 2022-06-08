@@ -1,6 +1,5 @@
 /** @jsxRuntime automatic */
 /** @jsxImportSource theme-ui */
-
 import { Box, Flex } from 'theme-ui';
 import React from 'react';
 
