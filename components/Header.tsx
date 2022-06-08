@@ -22,21 +22,22 @@ const Header: React.FC = () => {
   }, []);
 
   return (
-    <Box sx={{ bg: '#b80f0d' }}>
-      <Flex sx={{
-        width: 1024,
-        height: 512,
-        margin: '0 auto',
-        py: 20,
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
+    <Box sx={{ bg: '#b80f0d', width: '100%' }}>
+      <Flex
+        sx={{
+          height: 512,
+          width: ['100%', null, null, 1024],
+          py: 20,
+          margin: '0 auto',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
       >
-        <Flex>
+        <Flex sx={{ gap: 20 }}>
           <Flex sx={{
             color: 'white',
-            width: '50%',
+            width: ['100%', '50%'],
             flexDirection: 'column',
           }}
           >
@@ -51,7 +52,7 @@ const Header: React.FC = () => {
               mais pesquisados da net nas últimas 24 horas.
             </h2>
           </Flex>
-          <Box sx={{ width: '50%' }}>
+          <Box sx={{ width: ['100%', '50%'] }}>
             <Flex sx={{
               border: '1px solid #E5E5E5',
               bg: 'white',

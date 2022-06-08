@@ -8,7 +8,7 @@ import slugify from 'slugify';
 
 import TrendCard, { TrendingSearch } from 'components/TrendCard';
 import { useEffect } from 'react';
-import { useMainTrends } from '../contexts/MainTrendsProvider';
+import { useMainTrends } from 'contexts/MainTrendsProvider';
 
 export async function getStaticProps() {
   const trends = await googleTrends.dailyTrends({
@@ -38,29 +38,29 @@ const Home: NextPage<Props> = ({ trends }: Props) => {
     ) || []);
   }, []);
   return (
-    <>
+    <Flex
+      sx={{
+        flexDirection: 'column',
+        width: 1024,
+        margin: '20px auto',
+        px: [20, null, 0],
+      }}
+    >
       <Flex
-        as="main"
+        p={0}
         sx={{
-          flexDirection: 'column', width: 1024, margin: '20px auto',
+          flexDirection: 'column',
+          gap: 16,
         }}
       >
-        <Flex
-          p={0}
-          sx={{
-            flexDirection: 'column',
-            gap: 16,
-          }}
-        >
-          {trends?.map((trend) => (
-            <TrendCard
-              key={`trend-card-${slugify(trend.title.query)}`}
-              trend={trend}
-            />
-          ))}
-        </Flex>
+        {trends?.map((trend) => (
+          <TrendCard
+            key={`trend-card-${slugify(trend.title.query)}`}
+            trend={trend}
+          />
+        ))}
       </Flex>
-    </>
+    </Flex>
   );
 };
 
