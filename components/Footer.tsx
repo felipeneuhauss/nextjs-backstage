@@ -7,7 +7,7 @@ import React from 'react';
 const Footer: React.FC = () => (
   <Box sx={{ bg: '#b80f0d' }}>
     <Flex sx={{
-      width: 1024,
+      maxWidth: 1024,
       height: 130,
       margin: '0 auto',
       py: 20,

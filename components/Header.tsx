@@ -8,6 +8,12 @@ import slugify from 'slugify';
 import axios from 'axios';
 import { Quotation } from 'shared/types/Quotation';
 
+type TrendLinkProps = {
+  trend: string;
+}
+
+const TrendLink: React.FC<TrendLinkProps> = ({ trend }: { trend: string }) => <li><a href={`#${slugify(trend)}`}>{trend}</a></li>;
+
 const Header: React.FC = () => {
   const { mainTrends } = useMainTrends();
   const [quotation, setQuotation] = useState<Quotation>();
@@ -15,29 +21,32 @@ const Header: React.FC = () => {
   useEffect(() => {
     const getQuotation = async () => {
       const { data } = await axios.get('https://economia.awesomeapi.com.br/last/USD-BRL,EUR-BRL,BTC-BRL');
-      console.log('quotationResult', data);
       setQuotation(data);
     };
     getQuotation();
   }, []);
 
   return (
-    <Box sx={{ bg: '#b80f0d', width: '100%' }}>
+    <Box sx={{
+      bg: '#b80f0d',
+      width: '100%',
+      px: [20, null, null, null, 0],
+      py: [20, null, null, null, 0],
+    }}
+    >
       <Flex
         sx={{
-          height: 512,
           width: ['100%', null, null, 1024],
-          py: 20,
           margin: '0 auto',
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
         }}
       >
-        <Flex sx={{ gap: 20 }}>
+        <Flex sx={{ flexDirection: ['column', null, null, 'row'], gap: 20 }}>
           <Flex sx={{
             color: 'white',
-            width: ['100%', '50%'],
+            width: ['100%', null, null, null, '50%'],
             flexDirection: 'column',
           }}
           >
@@ -52,7 +61,7 @@ const Header: React.FC = () => {
               mais pesquisados da net nas últimas 24 horas.
             </h2>
           </Flex>
-          <Box sx={{ width: ['100%', '50%'] }}>
+          <Box sx={{ width: ['100%', null, null, null, '50%'] }}>
             <Flex sx={{
               border: '1px solid #E5E5E5',
               bg: 'white',
@@ -67,10 +76,13 @@ const Header: React.FC = () => {
                 '> li ': {
                   listStyle: 'none',
                   borderBottom: '1px solid #E5E5E5',
+                  '> a:hover': {
+                    textDecoration: 'underline',
+                  },
                 },
               }}
               >
-                {mainTrends && mainTrends?.slice(0, 8).map((trend: string) => <li><a href={`#${slugify(trend)}`}>{trend}</a></li>)}
+                {mainTrends && mainTrends?.slice(0, 8).map((trend: string) => <TrendLink trend={trend} key={`trend-link-${slugify(trend)}`} />)}
               </ul>
             </Flex>
           </Box>

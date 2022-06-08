@@ -70,13 +70,16 @@ const TrendArticle: React.FC<ArticleProps> = ({ article }: ArticleProps) => (
     href={article.url}
     sx={{
       display: 'flex',
-      flexDirection: 'row',
+      flexDirection: ['column', 'row'],
       gap: 12,
     }}
   >
     {article.image?.imageUrl
         && (
-        <Box sx={{ width: 100, height: 100, minWidth: 100 }}>
+        <Box sx={{
+          width: ['100%', 100], height: 100, minWidth: 100, textAlign: ['center', 'right'],
+        }}
+        >
           <ThemeUiImage
             src={article.image?.imageUrl}
             sx={{ borderRadius: 4, border: '1px solid #F7F7FC' }}

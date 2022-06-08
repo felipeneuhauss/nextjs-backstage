@@ -21,7 +21,6 @@ const MainLayout = ({ children }: {children: React.ReactNode}) => (
           name="description"
           content="As notícias relacionadas aos termos mais pesquisadas das últimas 24 horas na net."
         />
-        <meta name="viewport" content="width=device-width" />
         <meta charSet="utf-8" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

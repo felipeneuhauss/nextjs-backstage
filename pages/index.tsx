@@ -41,9 +41,9 @@ const Home: NextPage<Props> = ({ trends }: Props) => {
     <Flex
       sx={{
         flexDirection: 'column',
-        width: 1024,
+        maxWidth: 1024,
         margin: '20px auto',
-        px: [20, null, 0],
+        px: [20, null, null, 0],
       }}
     >
       <Flex
