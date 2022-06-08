@@ -4,13 +4,11 @@
 import type { NextPage } from 'next';
 import googleTrends from 'google-trends-api';
 import { Flex } from 'theme-ui';
-import axios from 'axios';
 import slugify from 'slugify';
 
 import TrendCard, { TrendingSearch } from 'components/TrendCard';
 import { useEffect } from 'react';
 import { useMainTrends } from '../contexts/MainTrendsProvider';
-import { Quotation } from '../shared/types/Quotation';
 
 export async function getStaticProps() {
   const trends = await googleTrends.dailyTrends({
