@@ -85,6 +85,7 @@ const TrendArticle: React.FC<ArticleProps> = ({ article }: ArticleProps) => (
             sx={{ borderRadius: 4, border: '1px solid #F7F7FC' }}
             alt={article.title}
             width="100px"
+            height="100px"
           />
         </Box>
         )}
