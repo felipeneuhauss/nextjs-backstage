@@ -2,11 +2,10 @@
 /** @jsxImportSource theme-ui */
 
 import {
-  Flex, Grid, Link, Text,
+  Flex, Grid, Image, Link, Text,
 } from 'theme-ui';
 import React from 'react';
 import slugify from 'slugify';
-import Image from 'next/image';
 import { Article, TrendingStory } from 'shared/types/Trends';
 import ellipsis from 'shared/helpers/ellipsis';
 
@@ -77,8 +76,8 @@ const TrendCard: React.FC<TrendCardProps> = ({ trend }: TrendCardProps) => {
       >
         <Image
           src={`https:${trend.image.imgUrl}`}
-          height={160}
-          width={160}
+          height="160px"
+          width="160px"
           alt={trend.title}
           sx={{ minWidth: 160 }}
         />
