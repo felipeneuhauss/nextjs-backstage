@@ -8,12 +8,13 @@ import slugify from 'slugify';
 import axios from 'axios';
 import { Quotation } from 'shared/types/Quotation';
 import currency from 'shared/helpers/currency';
+import ellipsis from '../shared/helpers/ellipsis';
 
 type TrendLinkProps = {
   trend: string;
 }
 
-const TrendLink: React.FC<TrendLinkProps> = ({ trend }: { trend: string }) => <li><a href={`#${slugify(trend)}`}>{trend}</a></li>;
+const TrendLink: React.FC<TrendLinkProps> = ({ trend }: { trend: string }) => <li><a href={`#${slugify(trend.toLowerCase())}`}>{ellipsis(trend, 50)}</a></li>;
 
 const Header: React.FC = () => {
   const { mainTrends } = useMainTrends();
@@ -21,7 +22,7 @@ const Header: React.FC = () => {
 
   useEffect(() => {
     const getQuotation = async () => {
-      const { data } = await axios.get('https://economia.awesomeapi.com.br/last/USD-BRL,EUR-BRL,BTC-BRL');
+      const { data } = await axios.get('https://economia.awesomeapi.com.br/last/USD-BRL,EUR-BRL');
       setQuotation(data);
     };
     getQuotation();
@@ -31,8 +32,8 @@ const Header: React.FC = () => {
     <Box sx={{
       bg: 'primary',
       width: '100%',
-      px: [20, null, null, null, 0],
-      py: [20, null, null, null, 0],
+      px: [20, null, null, 0],
+      py: [20, null, null, 80],
     }}
     >
       <Flex
@@ -56,8 +57,8 @@ const Header: React.FC = () => {
               dos principais veículos de comunicação pesquisados na net
             </h1>
             <h2 sx={{ fontSize: 18 }}>
-              Aqui você encontra tudo relacionado aos termos
-              mais pesquisados da net nas últimas 24 horas e onde encontrar a melhor matéria
+              Aqui você encontra as melhores matérias dos termos mais
+              pesquisados na net nas últimas 24 horas
             </h2>
           </Flex>
           <Box sx={{ width: ['100%', null, null, null, '50%'] }}>
@@ -67,6 +68,8 @@ const Header: React.FC = () => {
               flexDirection: 'column',
               borderRadius: 4,
               pb: 20,
+              height: '360px',
+              overflowY: 'auto',
             }}
             >
               <h2 sx={{ px: 24 }}>Principais termos pesquisados</h2>
@@ -81,7 +84,7 @@ const Header: React.FC = () => {
                 },
               }}
               >
-                {mainTrends && mainTrends?.slice(0, 8).map((trend: string) => <TrendLink trend={trend} key={`trend-link-${slugify(trend)}`} />)}
+                {mainTrends && mainTrends?.map((trend: string) => <TrendLink trend={trend} key={`trend-link-${slugify(trend)}`} />)}
               </ul>
             </Flex>
           </Box>

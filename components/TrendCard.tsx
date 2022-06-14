@@ -52,12 +52,12 @@ type TrendCardProps = {
 }
 
 const TrendCard: React.FC<TrendCardProps> = ({ trend }: TrendCardProps) => {
-  if (trend.articles?.length < 4) {
+  if (trend.articles?.length < 2) {
     return null;
   }
   return (
     <Flex
-      id={slugify(trend.title)}
+      id={slugify(trend.title.toLowerCase())}
       sx={{
         borderRadius: 4,
         border: '1px solid #E5E5E5',
