@@ -2,13 +2,13 @@
 /** @jsxImportSource theme-ui */
 
 import { Box, Flex } from 'theme-ui';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useMainTrends } from 'contexts/MainTrendsProvider';
 import slugify from 'slugify';
-import axios from 'axios';
-import { Quotation } from 'shared/types/Quotation';
-import currency from 'shared/helpers/currency';
+import dynamic from 'next/dynamic';
 import ellipsis from '../shared/helpers/ellipsis';
+
+const Quotations = dynamic(() => import('./Quotations'));
 
 type TrendLinkProps = {
   trend: string;
@@ -18,15 +18,6 @@ const TrendLink: React.FC<TrendLinkProps> = ({ trend }: { trend: string }) => <l
 
 const Header: React.FC = () => {
   const { mainTrends } = useMainTrends();
-  const [quotation, setQuotation] = useState<Quotation>();
-
-  useEffect(() => {
-    const getQuotation = async () => {
-      const { data } = await axios.get('https://economia.awesomeapi.com.br/last/USD-BRL,EUR-BRL');
-      setQuotation(data);
-    };
-    getQuotation();
-  }, []);
 
   return (
     <Box sx={{
@@ -89,29 +80,7 @@ const Header: React.FC = () => {
             </Flex>
           </Box>
         </Flex>
-        {quotation && (
-        <Flex sx={{
-          width: '100%',
-          justifyContent: 'flex-end',
-          mt: 20,
-          color: 'white',
-          '> span': {
-            ml: 20,
-          },
-        }}
-        >
-          <span>
-            <strong>Dolar comercial</strong>
-            {' '}
-            {currency(Number(quotation?.USDBRL?.high))}
-          </span>
-          <span>
-            <strong>Euro</strong>
-            {' '}
-            {currency(Number(quotation?.EURBRL?.high))}
-          </span>
-        </Flex>
-        )}
+        <Quotations />
       </Flex>
     </Box>
   );
