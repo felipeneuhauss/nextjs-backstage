@@ -11,9 +11,16 @@ import { toTheme } from '@theme-ui/typography';
 import grandViewTheme from 'typography-theme-grand-view';
 
 const theme = toTheme(grandViewTheme);
+const colors = {
+  text: '#000',
+  background: '#fff',
+  primary: '#b80f0d',
+  secondary: '#096E6E',
+  accent: '#B85A0D',
+};
 
 const MainLayout = ({ children }: {children: React.ReactNode}) => (
-  <ThemeProvider theme={theme}>
+  <ThemeProvider theme={{ ...theme, colors }}>
     <MainTrendsProvider>
       <Head>
         <title>Pra hoje temos</title>

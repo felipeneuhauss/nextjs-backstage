@@ -7,6 +7,7 @@ import { useMainTrends } from 'contexts/MainTrendsProvider';
 import slugify from 'slugify';
 import axios from 'axios';
 import { Quotation } from 'shared/types/Quotation';
+import currency from 'shared/helpers/currency';
 
 type TrendLinkProps = {
   trend: string;
@@ -28,7 +29,7 @@ const Header: React.FC = () => {
 
   return (
     <Box sx={{
-      bg: '#b80f0d',
+      bg: 'primary',
       width: '100%',
       px: [20, null, null, null, 0],
       py: [20, null, null, null, 0],
@@ -51,14 +52,12 @@ const Header: React.FC = () => {
           }}
           >
             <h1 sx={{ fontSize: 38 }}>
-              As principais notíciais
-              <br />
-              {' '}
-              dos principais veículos de comunicação
+              As notíciais
+              dos principais veículos de comunicação pesquisados na net
             </h1>
             <h2 sx={{ fontSize: 18 }}>
               Aqui você encontra tudo relacionado aos termos
-              mais pesquisados da net nas últimas 24 horas.
+              mais pesquisados da net nas últimas 24 horas e onde encontrar a melhor matéria
             </h2>
           </Flex>
           <Box sx={{ width: ['100%', null, null, null, '50%'] }}>
@@ -101,20 +100,12 @@ const Header: React.FC = () => {
           <span>
             <strong>Dolar comercial</strong>
             {' '}
-            R$
-            {parseFloat(quotation?.USDBRL?.high).toFixed(2)}
+            {currency(Number(quotation?.USDBRL?.high))}
           </span>
           <span>
             <strong>Euro</strong>
             {' '}
-            R$
-            {parseFloat(quotation?.EURBRL?.high).toFixed(2)}
-          </span>
-          <span>
-            <strong>{quotation?.BTCBRL?.code}</strong>
-            {' '}
-            R$
-            {parseFloat(quotation?.BTCBRL?.high).toFixed(2)}
+            {currency(Number(quotation?.EURBRL?.high))}
           </span>
         </Flex>
         )}
