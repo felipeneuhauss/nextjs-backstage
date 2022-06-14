@@ -2,9 +2,10 @@
 /** @jsxImportSource theme-ui */
 
 import {
-  Flex, Grid, Image, Link, Text,
+  Flex, Grid, Link, Text,
 } from 'theme-ui';
 import React from 'react';
+import Image from 'next/image';
 import slugify from 'slugify';
 import { Article, TrendingStory } from 'shared/types/Trends';
 import ellipsis from 'shared/helpers/ellipsis';
