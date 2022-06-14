@@ -77,8 +77,8 @@ const TrendCard: React.FC<TrendCardProps> = ({ trend }: TrendCardProps) => {
       >
         <Image
           src={`https:${trend.image.imgUrl}`}
-          height="160px"
-          width="160px"
+          height={160}
+          width={160}
           alt={trend.title}
           sx={{ minWidth: 160 }}
         />
